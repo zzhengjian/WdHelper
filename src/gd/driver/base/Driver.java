@@ -34,7 +34,7 @@ public class Driver {
 
 	
 	private static WebDriver oWebDriver;	
-	private static String parentNode = "//body";
+	private static String root = "//body";
 	
 	public static WebDriver getWebDriver()
 	{
@@ -45,12 +45,12 @@ public class Driver {
 		return oWebDriver;
 	}	
 	
-	public String getParentNode() {
-		return parentNode;
+	public String getRootNode() {
+		return root;
 	}
 
-	public static void setParentNode(String parentNode) {
-		Driver.parentNode = parentNode;
+	public static void setRootNode(String rootNode) {
+		Driver.root = rootNode;
 	}	
 	
 	public static String getCurrentUrl() {
@@ -70,7 +70,6 @@ public class Driver {
 	 */
 	private static WebDriver StartWebDriver(String sBrowserType)
 	{		
-		setDriverPath();
 		switch (sBrowserType.toUpperCase())
 		{
 			case "CHROME":	
@@ -97,15 +96,7 @@ public class Driver {
 		
 	}
 	
-	
-	private static void setDriverPath(){
 		
-		System.setProperty("webdriver.firefox.driver", new File(WebDriverSettings.PATH, "/bin/webdriver.xpi").getAbsolutePath());
-		//System.setProperty("webdriver.chrome.driver", new File(WebDriverSettings.PATH, "/bin/chromedriver.exe").getAbsolutePath());
-		//System.setProperty("webdriver.ie.driver", new File(WebDriverSettings.PATH, "/bin/IEDriverServer.exe").getAbsolutePath());
-		
-	}
-	
 	private static WebDriver startFirefox(){
 		FirefoxProfile profile = new FirefoxProfile(new File(WebDriverSettings.PATH + "/conf/fxprofile"));		
 		profile.setPreference("network.automatic-ntlm-auth.trusted-uris", "gdc1wcg01.nextestate.com");
@@ -229,7 +220,7 @@ public class Driver {
 	{
 		WebDriverWait wait = new WebDriverWait(oWebDriver, 5000);
 		wait.until(pageLoaded(oWebDriver));
-		wait.until(ExpectedConditions.presenceOfElementLocated(getBy(parentNode)));
+		wait.until(ExpectedConditions.presenceOfElementLocated(getBy(root)));
 		
 	}
 	
